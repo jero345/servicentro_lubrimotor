@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* ───────────── Tokens de marca (colores del logo) ───────────── */
+:root {
+  --brand-red: #fe1e39; /* CTAs, precios, acentos */
+  --brand-red-dark: #d6122b; /* hover/pressed · texto rojo pequeño sobre fondo claro (AA) */
+  --brand-black: #020408; /* fondos oscuros, texto principal */
+  --ink-900: #0b0e14;
+  --ink-700: #1a1f29;
+  --gray-600: #4b5563;
+  --gray-500: #6b7280;
+  --gray-100: #f3f4f6;
+  --white: #ffffff;
+  --whatsapp: #25d366; /* SOLO botón flotante de WhatsApp */
+
+  /* Curvas (Emil Kowalski) — espejo de src/motion/presets.ts */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --header-h: 64px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 72px;
+  }
+}
+
+@theme inline {
+  --color-brand-red: var(--brand-red);
+  --color-brand-red-dark: var(--brand-red-dark);
+  --color-brand-black: var(--brand-black);
+  --color-ink-900: var(--ink-900);
+  --color-ink-700: var(--ink-700);
+  --color-gray-600: var(--gray-600);
+  --color-gray-500: var(--gray-500);
+  --color-gray-100: var(--gray-100);
+  --color-whatsapp: var(--whatsapp);
+
+  --font-display: "Saira", "Arial Narrow", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+  --ease-drawer: var(--ease-drawer);
+}
+
+/* ───────────── Base ───────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 12px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-white font-sans text-brand-black antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--brand-red);
+    color: var(--white);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--brand-red);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Sobre fondo rojo el foco rojo no se ve */
+  .on-red :focus-visible {
+    outline-color: var(--brand-black);
+  }
+}
+
+/* ───────────── Utilidades de marca ───────────── */
+@layer components {
+  /* Titulares: Saira ligeramente expandida, como el logotipo */
+  .font-display {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+  }
+
+  /* Etiquetas técnicas: JetBrains Mono itálica con tracking amplio (slogan del logo) */
+  .tag-mono {
+    font-family: var(--font-mono);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Feedback de press para elementos que no son motion.* */
+  .pressable {
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+  .pressable:active {
+    transform: scale(0.97);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ───────────── Movimiento constante (CSS: fuera del hilo principal) ───────────── */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orbit-spin {
+  animation: orbit-spin 60s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes live-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  80%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.live-ping {
+  animation: live-ping 2s var(--ease-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin,
+  .marquee-track,
+  .live-ping {
+    animation: none;
+  }
+  /* Sin movimiento, el marquee pasa a ser una lista estática completa */
+  .marquee-track {
+    width: auto;
+  }
+  .marquee-copy {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1rem;
+  }
+  .marquee-copy[aria-hidden] {
+    display: none;
+  }
+  .marquee-copy span {
+    padding-inline: 0.75rem;
+    font-size: 1.75rem;
+  }
+  .pressable:active {
+    transform: none;
+  }
+}
