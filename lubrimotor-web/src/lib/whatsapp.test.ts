@@ -75,6 +75,23 @@ test('servicio: "Hola, quiero cotizar: [servicio]"', () => {
   );
 });
 
+test('portafolio empresarial: empresa y flota', () => {
+  assert.equal(
+    buildWhatsAppMessage({ source: 'business', business: { company: 'Transportes El Poblado', fleetSize: '12' } }, undefined),
+    [
+      'Hola Lubrimotor 👋 Quiero información del portafolio empresarial.',
+      'Empresa: Transportes El Poblado · Vehículos: 12',
+      '¿Me comparten el portafolio y las condiciones para empresas?',
+    ].join('\n'),
+  );
+});
+
+test('portafolio empresarial sin datos: sin línea vacía', () => {
+  const msg = buildWhatsAppMessage({ source: 'business', business: {} }, undefined);
+  assert.equal(msg.split('\n').length, 2);
+  assert.ok(!msg.includes('\n\n'));
+});
+
 test('botón flotante: mensaje por defecto', () => {
   assert.equal(buildWhatsAppMessage({ source: 'floating' }, undefined), 'Hola Lubrimotor, quiero cotizar un cambio de aceite.');
 });

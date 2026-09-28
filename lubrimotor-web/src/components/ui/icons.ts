@@ -12,7 +12,9 @@ import {
   ShieldCheck,
   Snowflake,
   Sparkles,
+  Truck,
   Wind,
+  Wrench,
   type LucideIcon,
 } from 'lucide-react';
 import type { IconKey } from '../../data/site.ts';
@@ -33,4 +35,6 @@ export const ICONS: Record<IconKey, LucideIcon> = {
   flame: Flame,
   bus: Bus,
   compass: Compass,
+  truck: Truck,
+  wrench: Wrench,
 };

@@ -72,8 +72,21 @@ Se registran en `src/data/site.ts` → `hero.background` y `hero.photo` (hero), 
 Pon el archivo en `public/cam2.webp` (o `.png` / `.svg`) y vuelve a compilar: el sello lo usa automáticamente.
 Si no existe, se muestra el sello tipográfico "DISTRIBUIDOR AUTORIZADO CAM2".
 
+## Portafolio empresarial (`site.business`)
+
+- Textos, beneficios (`items`) y formulario de la sección `#empresas`. El formulario abre WhatsApp con empresa y número de vehículos.
+- **PDF:** pon el archivo en `public/` (ej. `public/portafolio-lubrimotor.pdf`) y escribe `pdf: '/portafolio-lubrimotor.pdf'`. Aparece el botón "Descargar portafolio (PDF)".
+- **Empresas cliente:** agrega `{ name: 'Empresa S.A.S.', logo: '/clientes/empresa.webp' }` en `clients` (solo con autorización). Aparece la franja "Empresas que confían en nosotros".
+
+## Testimonios (`site.testimonials`)
+
+- Hoy son **de ejemplo** (`demo: true`) y cada build muestra un aviso. Antes de publicar o pautar, reemplázalos por opiniones reales (con autorización del cliente) y cambia `demo` a `false`.
+- A propósito no se agregan al schema de Google.
+
 ## Pendientes (TODO)
 
+- **Testimonios reales** en `site.testimonials` (hoy son de ejemplo).
+- **Portafolio empresarial:** condiciones/beneficios que defina el cliente, PDF y empresas cliente.
 - `siteUrl` en `src/data/site.ts`: poner el dominio final.
 - `address.geo` en `src/data/site.ts`: confirmar coordenadas exactas con el pin de Google Maps.
 - `social.facebook`: está en `null` (el ícono no se muestra hasta definirlo).

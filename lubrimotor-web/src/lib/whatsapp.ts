@@ -13,6 +13,7 @@ export type WhatsAppSource =
   | 'quote'
   | 'quote_other'
   | 'cam2'
+  | 'business'
   | 'service'
   | 'how_it_works'
   | 'location'
@@ -30,6 +31,12 @@ export interface VehicleFields {
   engineType?: string;
 }
 
+/** Portafolio empresarial */
+export interface BusinessFields {
+  company?: string;
+  fleetSize?: string;
+}
+
 export interface WhatsAppRequest {
   source: WhatsAppSource;
   brand?: VehicleBrand;
@@ -37,6 +44,8 @@ export interface WhatsAppRequest {
   fields?: VehicleFields;
   /** Nombre del servicio (tarjetas de servicios) */
   service?: string;
+  /** Datos del formulario empresarial */
+  business?: BusinessFields;
 }
 
 /* ───────────── UTMs ───────────── */
@@ -98,6 +107,11 @@ export function buildWhatsAppMessage(req: WhatsAppRequest, ref: string | undefin
       vehicleLine(req.fields),
       whatsapp.quoteClosing,
     ];
+  } else if (req.source === 'business') {
+    const company = clean(req.business?.company, 60);
+    const fleet = clean(req.business?.fleetSize, 6);
+    const details = [company && `Empresa: ${company}`, fleet && `Vehículos: ${fleet}`].filter(Boolean).join(' · ');
+    lines = [site.business.whatsappGreeting, details || undefined, site.business.whatsappClosing];
   } else if (req.source === 'quote_other') {
     const brandName = clean(req.fields?.brandName, 40);
     lines = [
@@ -126,7 +140,14 @@ export function openWhatsApp(req: WhatsAppRequest): void {
   const option = req.brand ? (req.option ?? req.brand.options[0]) : undefined;
   trackWhatsAppLead({
     source: req.source,
-    contentName: req.service ?? req.brand?.name ?? (req.source === 'quote_other' ? clean(req.fields?.brandName) || 'Otra marca' : 'General'),
+    contentName:
+      req.service ??
+      req.brand?.name ??
+      (req.source === 'business'
+        ? 'Portafolio empresarial'
+        : req.source === 'quote_other'
+          ? clean(req.fields?.brandName) || 'Otra marca'
+          : 'General'),
     value: option?.priceFrom,
   });
 

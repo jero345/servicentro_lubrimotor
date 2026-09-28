@@ -1,4 +1,5 @@
 import { MotionConfig } from 'motion/react';
+import { BusinessPortfolio } from './components/BusinessPortfolio.tsx';
 import { Cam2Badge } from './components/Cam2Badge.tsx';
 import { Faq } from './components/Faq.tsx';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp.tsx';
@@ -14,6 +15,7 @@ import { MultiBrand } from './components/MultiBrand.tsx';
 import { Promos } from './components/Promos.tsx';
 import { QuoteSelector } from './components/QuoteSelector.tsx';
 import { Services } from './components/Services.tsx';
+import { Testimonials } from './components/Testimonials.tsx';
 import { Warranty } from './components/Warranty.tsx';
 import { WhyUs } from './components/WhyUs.tsx';
 
@@ -37,7 +39,9 @@ export function App() {
         <HowItWorks />
         <WhyUs />
         <Gallery />
+        <Testimonials />
         <History />
+        <BusinessPortfolio />
         <Warranty />
         <Faq />
         <Promos />

@@ -60,7 +60,7 @@ export function Header() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="rounded-lg px-3 py-2 text-[0.95rem] font-medium text-white/80 transition-colors duration-150 hover:text-white"
+                  className="rounded-lg px-2.5 py-2 text-[0.95rem] font-medium text-white/80 transition-colors duration-150 hover:text-white xl:px-3"
                 >
                   {item.label}
                 </a>
@@ -81,8 +81,15 @@ export function Header() {
             </Button>
           </div>
           <div className="hidden lg:block">
-            <Button size="sm" icon={<WhatsAppIcon className="size-4.5" />} onClick={() => openWhatsApp({ source: 'header' })}>
-              Cotizar por WhatsApp
+            <Button
+              size="sm"
+              icon={<WhatsAppIcon className="size-4.5" />}
+              onClick={() => openWhatsApp({ source: 'header' })}
+              aria-label="Cotizar por WhatsApp"
+            >
+              {/* En 1024–1279 px el texto corto deja espacio a los 6 enlaces del menú */}
+              <span className="xl:hidden">Cotizar</span>
+              <span className="hidden xl:inline">Cotizar por WhatsApp</span>
             </Button>
           </div>
 

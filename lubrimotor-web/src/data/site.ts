@@ -55,7 +55,9 @@ export type IconKey =
   | 'shield'
   | 'flame'
   | 'bus'
-  | 'compass';
+  | 'compass'
+  | 'truck'
+  | 'wrench';
 
 export interface Service {
   id: string;
@@ -68,6 +70,15 @@ export interface Service {
 export interface Faq {
   q: string;
   a: string;
+}
+
+export interface Testimonial {
+  name: string;
+  /** Vehículo o contexto, ej. "Chevrolet Spark GT" */
+  vehicle: string;
+  text: string;
+  /** 1 a 5 */
+  rating: number;
 }
 
 /**
@@ -152,6 +163,7 @@ export const site = {
   nav: [
     { label: 'Cotizar', href: '#cotizar' },
     { label: 'Servicios', href: '#servicios' },
+    { label: 'Empresas', href: '#empresas' },
     { label: 'Nosotros', href: '#nosotros' },
     { label: 'Preguntas', href: '#preguntas' },
     { label: 'Ubicación', href: '#ubicacion' },
@@ -341,6 +353,51 @@ export const site = {
   promos: {
     title: 'Las promociones cambian cada mes',
     text: 'Síguenos para no perderte ninguna.',
+  },
+
+  /* ─────────────── PORTAFOLIO EMPRESARIAL ─────────────── */
+  // TODO: completar con la información que entregue el cliente (condiciones, convenios, facturación, etc.).
+  // Los textos actuales solo usan datos ya confirmados del negocio.
+  business: {
+    eyebrow: 'Portafolio empresarial',
+    title: 'Soluciones para empresas y flotas',
+    lead: 'Atendemos vehículos de empresa, flotas y servicio público con la misma asesoría y respaldo de siempre. Cuéntanos sobre tu flota y te compartimos nuestro portafolio.',
+    items: [
+      { icon: 'truck', title: 'Flotas y servicio público', text: 'Vehículos de empresa, particulares y de servicio público.' },
+      { icon: 'flame', title: 'Todas las motorizaciones', text: 'Gasolina, diésel, gas e híbridos.' },
+      { icon: 'wrench', title: 'Mantenimiento preventivo', text: 'Cambio de aceite, filtros, aceite de caja y revisión de líquidos.' },
+      { icon: 'compass', title: 'Asesoría técnica', text: 'Te orientamos según la especificación de cada vehículo de tu flota.' },
+    ] satisfies { icon: IconKey; title: string; text: string }[],
+    form: {
+      title: 'Solicita el portafolio',
+      text: 'Déjanos el nombre de tu empresa y cuántos vehículos tienes; te respondemos por WhatsApp.',
+      cta: 'Solicitar portafolio',
+    },
+    // TODO: poner el PDF en public/ (ej. public/portafolio-lubrimotor.pdf) y escribir aquí '/portafolio-lubrimotor.pdf'.
+    // Mientras sea null, el botón de descarga no se muestra.
+    pdf: null as string | null,
+    // TODO: empresas cliente (solo con autorización). Logo opcional en public/clientes/. Si está vacío, la franja no se muestra.
+    clients: [] as { name: string; logo?: string }[],
+    whatsappGreeting: 'Hola Lubrimotor 👋 Quiero información del portafolio empresarial.',
+    whatsappClosing: '¿Me comparten el portafolio y las condiciones para empresas?',
+  },
+
+  /* ─────────────── TESTIMONIOS ─────────────── */
+  // ⚠ TODO: TESTIMONIOS DE EJEMPLO (ficticios). Reemplazar por opiniones reales de clientes
+  // (con su autorización) antes de publicar la página o pautar en Meta Ads, y cambiar demo a false.
+  // Publicar reseñas inventadas puede considerarse publicidad engañosa.
+  testimonials: {
+    demo: true,
+    eyebrow: 'Testimonios',
+    title: 'Lo que dicen nuestros clientes',
+    items: [
+      { name: 'Andrés M.', vehicle: 'Chevrolet Spark GT', rating: 5, text: 'Llegué sin cita un sábado y en media hora tenía el cambio de aceite listo. Me explicaron qué aceite usa mi carro.' },
+      { name: 'Carolina R.', vehicle: 'Renault Sandero', rating: 5, text: 'Muy buena asesoría. Me mostraron las opciones de filtro original y homologado y me confirmaron el precio antes de empezar.' },
+      { name: 'Jhon Fredy G.', vehicle: 'Taxi · Hyundai i10', rating: 5, text: 'Con el taxi no puedo perder tiempo y aquí me atienden rápido. Que abran el domingo me salva la semana.' },
+      { name: 'Luis E.', vehicle: 'Toyota Fortuner', rating: 5, text: 'Buscaba una referencia específica para mi camioneta y la tenían. Además revisaron todos los líquidos.' },
+      { name: 'Valentina P.', vehicle: 'Kia Picanto', rating: 5, text: 'Me queda cerca a la universidad. Coticé por WhatsApp, el precio fue claro y la atención muy amable.' },
+      { name: 'Gustavo H.', vehicle: 'Ford Ranger · diésel', rating: 5, text: 'Llevo años haciendo aquí el mantenimiento de mi camioneta. Son serios, cumplidos y conocen de lubricación.' },
+    ] satisfies Testimonial[],
   },
 
   /* ─────────────── FOTOS ─────────────── */
